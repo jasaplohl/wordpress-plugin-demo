@@ -30,12 +30,15 @@
  * Copyright 2005-2022 Jasa Plohl.
  */
 
-require_once( plugin_dir_path( __FILE__ ) . 'class.jasa-demo-plugin.php' );
+define( 'JASA_DEMO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'JASA_DEMO_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
+require_once(JASA_DEMO_PLUGIN_DIR . '/inc/class.jasa-demo-plugin.php');
 
 // Make sure we don't expose any info if called directly
 function_exists( 'add_action' ) or die('Hi there!  I\'m just a plugin, not much I can do when called directly.');
 
-JasaDemoPlugin::init();
+JasaDemoPlugin::init(JASA_DEMO_PLUGIN_BASENAME);
 
 register_activation_hook(__FILE__, array('JasaDemoPlugin', 'pluginActivation'));
 register_deactivation_hook(__FILE__, array('JasaDemoPlugin', 'pluginDeactivation'));
