@@ -1,15 +1,16 @@
 <?php
+/**
+ * @package JasaDemoPlugin
+ */
 
 class JasaDemoPlugin {
-    public static function init($basename): void {
+    public static function init(): void {
         add_action('init', array('JasaDemoPlugin', 'generateTransactionPostType')); // Create the custom post type
         add_action('admin_enqueue_scripts', array('JasaDemoPlugin', 'enqueueAssets')); // Load the assets
-        add_action('admin_menu', array('JasaDemoPlugin', 'addAdminPage')); // Create the admin page and its menu item
-        add_filter("plugin_action_links_$basename", array('JasaDemoPlugin', 'adminUrl'));
-    }
 
-    public static function initFilters(): void {
-        add_filter('plugin_action_links_' . plugin_basename(__FILE__), array('JasaDemoPlugin', 'adminUrl'));
+        // Admin
+        add_action('admin_menu', array('JasaDemoPlugin', 'addAdminPage')); // Create the admin page and its menu item
+        add_filter('plugin_action_links_'.PLUGIN_BASENAME, array('JasaDemoPlugin', 'adminUrl')); // Admin url on the plugin list item
     }
 
     public static function pluginActivation(): void {
@@ -32,8 +33,8 @@ class JasaDemoPlugin {
     }
 
     public static function enqueueAssets(): void {
-        wp_enqueue_style('myPluginStyle', plugins_url('../assets/styles.css', __FILE__));
-        wp_enqueue_script('myPluginScript', plugins_url('../assets/helper.js', __FILE__));
+        wp_enqueue_style('myPluginStyle', PLUGIN_URL . 'assets/styles.css');
+        wp_enqueue_script('myPluginScript', PLUGIN_URL . 'assets/helper.js');
     }
 
     public static function addAdminPage(): void {
@@ -48,7 +49,7 @@ class JasaDemoPlugin {
     }
 
     public static function adminPage(): void {
-        require_once(plugin_dir_path(__FILE__) . '../templates/admin.php');
+        require_once(PLUGIN_DIR_PATH . '/templates/admin.php');
     }
 
     public static function adminUrl($actions) {
