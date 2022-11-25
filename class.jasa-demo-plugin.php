@@ -1,7 +1,7 @@
 <?php
 
 class JasaDemoPlugin {
-    public function __construct(){
+    public static function init(){
         add_action('init', array('JasaDemoPlugin', 'generateTransactionPostType'));
         add_action('admin_enqueue_scripts', array('JasaDemoPlugin', 'enqueueAssets'));
     }
@@ -14,7 +14,7 @@ class JasaDemoPlugin {
         flush_rewrite_rules();
     }
 
-    public static function generateTransactionPostType(): void {
+    private static function generateTransactionPostType(): void {
         register_post_type(
             'transactions',
             array(
@@ -25,7 +25,7 @@ class JasaDemoPlugin {
         );
     }
 
-    public static function enqueueAssets() {
+    private static function enqueueAssets() {
         wp_enqueue_style('myPluginStyle', plugins_url('/assets/styles.css', __FILE__));
         wp_enqueue_script('myPluginScript', plugins_url('/assets/helper.js', __FILE__));
     }

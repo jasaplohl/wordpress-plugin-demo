@@ -35,7 +35,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'class.jasa-demo-plugin.php' );
 // Make sure we don't expose any info if called directly
 function_exists( 'add_action' ) or die('Hi there!  I\'m just a plugin, not much I can do when called directly.');
 
-$jasaDemoPlugin = new JasaDemoPlugin();
+JasaDemoPlugin::init();
 
 register_activation_hook(__FILE__, array('JasaDemoPlugin', 'pluginActivation'));
 register_deactivation_hook(__FILE__, array('JasaDemoPlugin', 'pluginDeactivation'));
