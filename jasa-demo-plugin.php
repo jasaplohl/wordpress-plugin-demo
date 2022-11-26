@@ -33,13 +33,13 @@
 // Make sure we don't expose any info if called directly
 function_exists( 'add_action' ) or die('Hi there!  I\'m just a plugin, not much I can do when called directly.');
 
-define( 'PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
+define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
-register_activation_hook(__FILE__, array('JasaDemoPlugin', 'pluginActivation'));
-register_deactivation_hook(__FILE__, array('JasaDemoPlugin', 'pluginDeactivation'));
+require_once(PLUGIN_PATH . '/inc/Init.php');
 
-require_once(PLUGIN_DIR_PATH . '/inc/class.jasa-demo-plugin.php');
+register_activation_hook(__FILE__, array('Init', 'pluginActivation'));
+register_deactivation_hook(__FILE__, array('Init', 'pluginDeactivation'));
 
-JasaDemoPlugin::init();
+Init::init();
