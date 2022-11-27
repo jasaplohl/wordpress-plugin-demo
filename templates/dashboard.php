@@ -5,10 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin console</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <h1>Jasa Demo Plugin <span class="text-red">Admin</span> Dashboard</h1>
-    <p>Sample text</p>
+    <h1>Dashboard</h1>
 </body>
 </html>

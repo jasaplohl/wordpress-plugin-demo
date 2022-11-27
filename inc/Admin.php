@@ -6,20 +6,28 @@
 class Admin {
     public static function init(): void {
         add_action('admin_menu', array('Admin', 'addAdminPage')); // Create the admin page and its menu item
+        add_action('admin_menu', array('Admin', 'addAdminSubPages')); // Create the admin subpages
     }
 
     public static function addAdminPage(): void {
         add_menu_page(
-            'Jasa Demo Plugin',
-            'JasaDemo',
+            'Jasa Demo',
+            'Jasa Demo',
             'manage_options',
             'jasa_demo',
-            array('Admin', 'adminPage'),
-            'dashicons-admin-tools'
+            function () { require_once(PLUGIN_PATH . '/templates/admin.php'); },
+            'dashicons-admin-tools',
         );
     }
 
-    public static function adminPage(): void {
-        require_once(PLUGIN_PATH . '/templates/admin.php');
+    public static function addAdminSubPages(): void {
+        add_submenu_page(
+            'jasa_demo',
+            'Dashboard',
+            'Dashboard',
+            'manage_options',
+            'menu_subpage',
+            function() { require_once(PLUGIN_PATH . '/templates/dashboard.php'); }
+        );
     }
 }
