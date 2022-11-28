@@ -1,14 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin console</title>
-</head>
-<body>
-    <h1>Jasa Demo Plugin <span class="text-red">Admin</span> Dashboard</h1>
-    <p>Sample text</p>
-</body>
-</html>
+<div class="wrap">
+    <h1>Jasa Demo Plugin</h1>
+    <?php settings_errors(); ?>
+    <form
+        method="post"
+        action="options.php"
+    >
+        <?php
+            settings_fields('userGroup');
+            do_settings_sections('jasa_demo');
+            submit_button();
+        ?>
+    </form>
+</div>

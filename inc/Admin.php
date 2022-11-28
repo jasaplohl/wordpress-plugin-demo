@@ -3,10 +3,14 @@
  * @package JasaDemoPlugin
  */
 
+require_once(PLUGIN_PATH . '/inc/Form.php');
+
 class Admin {
+
     public static function init(): void {
         add_action('admin_menu', array('Admin', 'addAdminPage')); // Create the admin page and its menu item
         add_action('admin_menu', array('Admin', 'addAdminSubPages')); // Create the admin subpages
+	    Form::init( 'jasa_demo');
     }
 
     public static function addAdminPage(): void {
@@ -15,7 +19,7 @@ class Admin {
             'Jasa Demo',
             'manage_options',
             'jasa_demo',
-            function () { require_once(PLUGIN_PATH . '/templates/admin.php'); },
+            function () { return require_once(PLUGIN_PATH . '/templates/admin.php'); },
             'dashicons-admin-tools',
         );
     }
@@ -27,7 +31,7 @@ class Admin {
             'Dashboard',
             'manage_options',
             'menu_subpage',
-            function() { require_once(PLUGIN_PATH . '/templates/dashboard.php'); }
+            function() { return require_once(PLUGIN_PATH . '/templates/dashboard.php'); }
         );
     }
 }
