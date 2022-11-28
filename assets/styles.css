@@ -5,3 +5,42 @@ h1 {
 .input-field label {
     color: cornflowerblue;
 }
+
+.nav-tabs {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nav-tabs>li {
+    flex-grow: 1;
+    padding-block: 1rem;
+    text-align: center;
+    border-radius: 2rem;
+}
+
+.nav-tabs>li:hover {
+    cursor: pointer;
+}
+
+.nav-tabs p {
+    margin: 0;
+}
+
+.nav-tabs>.active {
+    background-color: white;
+}
+
+.tab-content {
+    border-radius: 1rem;
+    padding: 2rem;
+    background-color: white;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tab {
+    display: none;
+}
+
+.active {
+    display: block;
+}
