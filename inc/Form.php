@@ -5,86 +5,156 @@ class Form {
 
 	public static array $options = array(
 		array(
-			'option_group' => 'userGroup',
-			'option_name' => 'firstName',
-			'callback' => array('Form', 'pluginOptionGroup')
+			'option_group' => 'pluginSettings',
+			'option_name' => 'cptManager',
+			'callback' => array('Form', 'handleCheckbox')
 		),
 		array(
-			'option_group' => 'userGroup',
-			'option_name' => 'lastName',
-			'callback' => array('Form', 'pluginOptionGroup')
+			'option_group' => 'pluginSettings',
+			'option_name' => 'taxonomyManager',
+			'callback' => array('Form', 'handleCheckbox')
 		),
 		array(
-			'option_group' => 'userGroup',
-			'option_name' => 'email',
-			'callback' => array('Form', 'pluginOptionGroup')
+			'option_group' => 'pluginSettings',
+			'option_name' => 'mediaWidget',
+			'callback' => array('Form', 'handleCheckbox')
 		),
 		array(
-			'option_group' => 'userGroup',
-			'option_name' => 'email',
-			'callback' => array('Form', 'pluginOptionGroup')
+			'option_group' => 'pluginSettings',
+			'option_name' => 'galleryManager',
+			'callback' => array('Form', 'handleCheckbox')
 		),
 		array(
-			'option_group' => 'userGroup',
-			'option_name' => 'color',
-			'callback' => array('Form', 'pluginOptionGroup')
-		)
+			'option_group' => 'pluginSettings',
+			'option_name' => 'testimonialManager',
+			'callback' => array('Form', 'handleCheckbox')
+		),
+        array(
+            'option_group' => 'pluginSettings',
+            'option_name' => 'templateManager',
+            'callback' => array('Form', 'handleCheckbox')
+        ),
+        array(
+            'option_group' => 'pluginSettings',
+            'option_name' => 'authManager',
+            'callback' => array('Form', 'handleCheckbox')
+        ),
+        array(
+            'option_group' => 'pluginSettings',
+            'option_name' => 'membershipManager',
+            'callback' => array('Form', 'handleCheckbox')
+        ),
+        array(
+            'option_group' => 'pluginSettings',
+            'option_name' => 'chatManager',
+            'callback' => array('Form', 'handleCheckbox')
+        )
 	);
 
 	public static array $sections = array(
 		array(
 			'id' => 'admin_section',
 			'title' => 'Admin section',
-			'callback' => array('Form', 'createSettingsSection')
+			'callback' => array('Form', 'createAdminSection')
 		),
 		array(
 			'id' => 'common_section',
 			'title' => 'Common section',
-			'callback' => array('Form', 'createCommonSection')
+            'callback' => null
 		)
 	);
 
 	private static array $fields = array(
 		array(
-			'id' => 'firstName',
-			'title' => 'First name',
-			'callback' => array('Form', 'firstNameFieldCallback'),
+			'id' => 'cptManager',
+			'title' => 'Custom Post Type Manager',
+			'callback' => array('Form', 'createCheckbox'),
 			'section' => 'admin_section',
 			'args' => array(
-				'label_for' => 'firstName',
+				'label_for' => 'cptManager',
 				'class' => 'input-field'
 			)
 		),
 		array(
-			'id' => 'lastName',
-			'title' => 'Last name',
-			'callback' => array('Form', 'lastNameFieldCallback'),
+			'id' => 'taxonomyManager',
+			'title' => 'Taxonomy Manager',
+			'callback' => array('Form', 'createCheckbox'),
 			'section' => 'admin_section',
 			'args' => array(
-				'label_for' => 'lastName',
+				'label_for' => 'taxonomyManager',
 				'class' => 'input-field'
 			)
 		),
 		array(
-			'id' => 'email',
-			'title' => 'Email',
-			'callback' => array('Form', 'emailFieldCallback'),
+			'id' => 'mediaWidget',
+			'title' => 'Media Widget',
+			'callback' => array('Form', 'createCheckbox'),
 			'section' => 'admin_section',
 			'args' => array(
-				'label_for' => 'email',
+				'label_for' => 'mediaWidget',
 				'class' => 'input-field'
 			)
 		),
 		array(
-			'id' => 'color',
-			'title' => 'Color',
-			'callback' => array('Form', 'colorFieldCallback'),
-			'section' => 'common_section',
+			'id' => 'galleryManager',
+			'title' => 'Gallery Manager',
+			'callback' => array('Form', 'createCheckbox'),
+			'section' => 'admin_section',
 			'args' => array(
-				'label_for' => 'color',
+				'label_for' => 'galleryManager',
 				'class' => 'input-field'
 			)
-		)
+		),
+        array(
+            'id' => 'testimonialManager',
+            'title' => 'Testimonial Manager',
+            'callback' => array('Form', 'createCheckbox'),
+            'section' => 'admin_section',
+            'args' => array(
+                'label_for' => 'testimonialManager',
+                'class' => 'input-field'
+            )
+        ),
+        array(
+            'id' => 'templateManager',
+            'title' => 'Template Manager',
+            'callback' => array('Form', 'createCheckbox'),
+            'section' => 'admin_section',
+            'args' => array(
+                'label_for' => 'templateManager',
+                'class' => 'input-field'
+            )
+        ),
+        array(
+            'id' => 'authManager',
+            'title' => 'Authentication Manager',
+            'callback' => array('Form', 'createCheckbox'),
+            'section' => 'admin_section',
+            'args' => array(
+                'label_for' => 'authManager',
+                'class' => 'input-field'
+            )
+        ),
+        array(
+            'id' => 'membershipManager',
+            'title' => 'Membership Manager',
+            'callback' => array('Form', 'createCheckbox'),
+            'section' => 'admin_section',
+            'args' => array(
+                'label_for' => 'membershipManager',
+                'class' => 'input-field'
+            )
+        ),
+        array(
+            'id' => 'chatManager',
+            'title' => 'Chat Manager',
+            'callback' => array('Form', 'createCheckbox'),
+            'section' => 'admin_section',
+            'args' => array(
+                'label_for' => 'chatManager',
+                'class' => 'input-field'
+            )
+        )
 	);
 
 	public static function init($page): void {
@@ -107,68 +177,25 @@ class Form {
 		}
 	}
 
-	public static function pluginOptionGroup($input) {
+	public static function handleCheckbox($input): bool {
 		// validation, parsing, authentication etc.
-		return $input;
+		return (bool)$input;
 	}
 
-	public static function createSettingsSection(): void {
-		echo '<p>User settings.</p>';
+	public static function createAdminSection(): void {
+		echo '<p>Activate or deactivate the features of the plugin.</p>';
 	}
 
-	public static function createCommonSection(): void {
-		echo '<p>Common settings.</p>';
-	}
-
-	public static function firstNameFieldCallback(): void {
-		$value = esc_attr(get_option('firstName'));
-		echo '
-			<input
-				type="text"
-				class="regular-text"
-				name='.'firstName'.'
-				value="'.$value.'"
-				placeholder="'.'Your first name'.'"
+    public static function createCheckbox($args): void {
+        $name = $args["label_for"];
+        $value = get_option($name);
+        echo '
+            <input
+				type="checkbox"
+				name='.$name.'
+				'. ($value ? 'checked' : '') .'
 			/>
-		';
-	}
-
-	public static function lastNameFieldCallback(): void {
-		$value = esc_attr(get_option('lastName'));
-		echo '
-			<input
-				type="text"
-				class="regular-text"
-				name='.'lastName'.'
-				value="'.$value.'"
-				placeholder="'.'Your last name'.'"
-			/>
-		';
-	}
-
-	public static function emailFieldCallback(): void {
-		$value = esc_attr(get_option('email'));
-		echo '
-			<input
-				type="text"
-				class="regular-text"
-				name='.'email'.'
-				value="'.$value.'"
-				placeholder="'.'Your email'.'"
-			/>
-		';
-	}
-
-	public static function colorFieldCallback(): void {
-		$value = esc_attr(get_option('color'));
-		echo '
-		<input
-			type="text"
-			class="regular-text"
-			name='.'color'.'
-			value="'.$value.'"
-			placeholder="'.'Favourite color'.'"
-		/>';
-	}
+        ';
+    }
 
 }
