@@ -3,53 +3,17 @@
 class Form {
 	public static string $page;
 
-	public static array $options = array(
-		array(
-			'option_group' => 'pluginSettings',
-			'option_name' => 'cptManager',
-			'callback' => array('Form', 'handleCheckbox')
-		),
-		array(
-			'option_group' => 'pluginSettings',
-			'option_name' => 'taxonomyManager',
-			'callback' => array('Form', 'handleCheckbox')
-		),
-		array(
-			'option_group' => 'pluginSettings',
-			'option_name' => 'mediaWidget',
-			'callback' => array('Form', 'handleCheckbox')
-		),
-		array(
-			'option_group' => 'pluginSettings',
-			'option_name' => 'galleryManager',
-			'callback' => array('Form', 'handleCheckbox')
-		),
-		array(
-			'option_group' => 'pluginSettings',
-			'option_name' => 'testimonialManager',
-			'callback' => array('Form', 'handleCheckbox')
-		),
-        array(
-            'option_group' => 'pluginSettings',
-            'option_name' => 'templateManager',
-            'callback' => array('Form', 'handleCheckbox')
-        ),
-        array(
-            'option_group' => 'pluginSettings',
-            'option_name' => 'authManager',
-            'callback' => array('Form', 'handleCheckbox')
-        ),
-        array(
-            'option_group' => 'pluginSettings',
-            'option_name' => 'membershipManager',
-            'callback' => array('Form', 'handleCheckbox')
-        ),
-        array(
-            'option_group' => 'pluginSettings',
-            'option_name' => 'chatManager',
-            'callback' => array('Form', 'handleCheckbox')
-        )
-	);
+    public static array $checkboxOptions = array(
+        'cptManager',
+        'taxonomyManager',
+        'mediaWidget',
+        'galleryManager',
+        'testimonialManager',
+        'templateManager',
+        'authManager',
+        'membershipManager',
+        'chatManager'
+    );
 
 	public static array $sections = array(
 		array(
@@ -164,8 +128,8 @@ class Form {
 	}
 
 	public static function create(): void {
-		foreach(Form::$options as $option) {
-			register_setting( $option['option_group'], $option['option_name'], $option['callback']);
+		foreach(Form::$checkboxOptions as $optionName) {
+			register_setting( 'pluginSettings', $optionName, array('Form', 'handleCheckbox'));
 		}
 
 		foreach(Form::$sections as $section) {
