@@ -3,4 +3,4 @@
 package-lock.json
 
 # don't include the built assets
-/assets
+/dist

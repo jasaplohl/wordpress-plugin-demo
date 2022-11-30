@@ -6,7 +6,7 @@ class Enqueue {
     }
 
     public static function enqueueAssets(): void {
-        wp_enqueue_style('myPluginStyle', PLUGIN_URL . 'assets/styles.css');
-        wp_enqueue_script('myPluginScript', PLUGIN_URL . 'assets/bundle.js');
+        wp_enqueue_style('myPluginStyle', PLUGIN_URL . 'dist/styles.css');
+        wp_enqueue_script('myPluginScript', PLUGIN_URL . 'dist/bundle.js');
     }
 }

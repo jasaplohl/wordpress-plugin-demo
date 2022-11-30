@@ -1,2 +1,6 @@
-const a: string = "abc";
-console.log(a);
+import './assets/styles/styles.scss';
+import {init} from "./assets/helpers/common.helpers";
+
+window.onload = () => {
+    init();
+}
