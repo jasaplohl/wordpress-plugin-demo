@@ -15,7 +15,7 @@
         <div id="tab-1" class="tab tab--active">
             <form method="post" action="options.php">
 		        <?php
-                    settings_fields('userGroup');
+                    settings_fields('pluginSettings');
                     do_settings_sections('jasa_demo');
                     submit_button();
 		        ?>

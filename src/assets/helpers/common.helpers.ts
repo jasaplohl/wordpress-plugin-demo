@@ -1,7 +1,9 @@
 const init = () => {
     const navbar: any = document.getElementById("navbar");
-    for(const tab of navbar.children) {
-        tab.addEventListener("click", switchTabs);
+    if(navbar) {
+        for(const tab of navbar.children) {
+            tab.addEventListener("click", switchTabs);
+        }
     }
 };
 
