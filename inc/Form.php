@@ -34,7 +34,7 @@ class Form {
 	public static function init($page): void {
 		Form::$page = $page;
 
-		add_action('admin_init', array('Form', 'create')); // Create the admin custom fields
+		add_action(hook_name: 'admin_init', callback: array('Form', 'create')); // Create the admin custom fields
 	}
 
     /**
@@ -43,23 +43,49 @@ class Form {
      * 3. Add the settings fields (actual input fields).
      */
 	public static function create(): void {
+        $optionName = Form::$page;
+
+        register_setting(
+            option_group: 'pluginSettings',
+            option_name: $optionName,
+            args: array('Form', 'handleCheckbox')
+        );
+
         foreach(Form::$sections as $section) {
-            add_settings_section( $section['id'], $section['title'], $section['callback'], Form::$page);
+            add_settings_section(
+                id: $section['id'],
+                title: $section['title'],
+                callback: $section['callback'],
+                page: Form::$page
+            );
         }
 
 		foreach(Form::$checkboxOptions as $id => $title) {
-            register_setting( 'pluginSettings', $id, array('Form', 'handleCheckbox'));
             $args = array(
+                'option_name' => $optionName,
                 'label_for' => $id,
                 'class' => 'input-field'
             );
-            add_settings_field( $id, $title, array('Form', 'createCheckbox'), Form::$page, 'admin_section', $args);
+            add_settings_field(
+                id: $id,
+                title: $title,
+                callback: array('Form', 'createCheckbox'),
+                page: Form::$page,
+                section: 'admin_section',
+                args: $args
+            );
 		}
 	}
 
-	public static function handleCheckbox($input): bool {
+	public static function handleCheckbox($input): array {
 		// validation, parsing, authentication etc.
-		return (bool)$input;
+        $data = array();
+
+        foreach (Form::$checkboxOptions as $id => $title) {
+            $data[$id] = isset($input[$id]);
+        }
+
+		return $data;
 	}
 
 	public static function createAdminSection(): void {
@@ -67,13 +93,15 @@ class Form {
 	}
 
     public static function createCheckbox($args): void {
+        $option = $args["option_name"];
         $name = $args["label_for"];
-        $value = get_option($name);
+        $value = get_option(option: $option); // array of values from the options table
+        $checked = $value[$name];
         echo '
             <input
 				type="checkbox"
-				name='.$name.'
-				'. ($value ? 'checked' : '') .'
+				name='. $option . '[' . $name . ']' .'
+				'. ($checked ? 'checked' : '') .'
 			/>
         ';
     }
