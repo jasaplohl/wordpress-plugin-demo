@@ -3,16 +3,19 @@
 class Form {
 	public static string $page;
 
+    /**
+     * Map (optionId => optionTitle);
+     */
     public static array $checkboxOptions = array(
-        'cptManager',
-        'taxonomyManager',
-        'mediaWidget',
-        'galleryManager',
-        'testimonialManager',
-        'templateManager',
-        'authManager',
-        'membershipManager',
-        'chatManager'
+        'cptManager' => 'Custom Post Type Manager',
+        'taxonomyManager' => 'Taxonomy Manager',
+        'mediaWidget' => 'Media Widget',
+        'galleryManager' => 'Gallery Manager',
+        'testimonialManager' => 'Testimonial Manager',
+        'templateManager' => 'Template Manager',
+        'authManager' => 'Authentication Manager',
+        'membershipManager' => 'Membership Manager',
+        'chatManager' => 'Chat Manager'
     );
 
 	public static array $sections = array(
@@ -28,116 +31,29 @@ class Form {
 		)
 	);
 
-	private static array $fields = array(
-		array(
-			'id' => 'cptManager',
-			'title' => 'Custom Post Type Manager',
-			'callback' => array('Form', 'createCheckbox'),
-			'section' => 'admin_section',
-			'args' => array(
-				'label_for' => 'cptManager',
-				'class' => 'input-field'
-			)
-		),
-		array(
-			'id' => 'taxonomyManager',
-			'title' => 'Taxonomy Manager',
-			'callback' => array('Form', 'createCheckbox'),
-			'section' => 'admin_section',
-			'args' => array(
-				'label_for' => 'taxonomyManager',
-				'class' => 'input-field'
-			)
-		),
-		array(
-			'id' => 'mediaWidget',
-			'title' => 'Media Widget',
-			'callback' => array('Form', 'createCheckbox'),
-			'section' => 'admin_section',
-			'args' => array(
-				'label_for' => 'mediaWidget',
-				'class' => 'input-field'
-			)
-		),
-		array(
-			'id' => 'galleryManager',
-			'title' => 'Gallery Manager',
-			'callback' => array('Form', 'createCheckbox'),
-			'section' => 'admin_section',
-			'args' => array(
-				'label_for' => 'galleryManager',
-				'class' => 'input-field'
-			)
-		),
-        array(
-            'id' => 'testimonialManager',
-            'title' => 'Testimonial Manager',
-            'callback' => array('Form', 'createCheckbox'),
-            'section' => 'admin_section',
-            'args' => array(
-                'label_for' => 'testimonialManager',
-                'class' => 'input-field'
-            )
-        ),
-        array(
-            'id' => 'templateManager',
-            'title' => 'Template Manager',
-            'callback' => array('Form', 'createCheckbox'),
-            'section' => 'admin_section',
-            'args' => array(
-                'label_for' => 'templateManager',
-                'class' => 'input-field'
-            )
-        ),
-        array(
-            'id' => 'authManager',
-            'title' => 'Authentication Manager',
-            'callback' => array('Form', 'createCheckbox'),
-            'section' => 'admin_section',
-            'args' => array(
-                'label_for' => 'authManager',
-                'class' => 'input-field'
-            )
-        ),
-        array(
-            'id' => 'membershipManager',
-            'title' => 'Membership Manager',
-            'callback' => array('Form', 'createCheckbox'),
-            'section' => 'admin_section',
-            'args' => array(
-                'label_for' => 'membershipManager',
-                'class' => 'input-field'
-            )
-        ),
-        array(
-            'id' => 'chatManager',
-            'title' => 'Chat Manager',
-            'callback' => array('Form', 'createCheckbox'),
-            'section' => 'admin_section',
-            'args' => array(
-                'label_for' => 'chatManager',
-                'class' => 'input-field'
-            )
-        )
-	);
-
 	public static function init($page): void {
 		Form::$page = $page;
 
 		add_action('admin_init', array('Form', 'create')); // Create the admin custom fields
 	}
 
+    /**
+     * 1. Register settings (option groups and the names of the options inside the groups).
+     * 2. Add settings sections to group the settings options.
+     * 3. Add the settings fields (actual input fields).
+     */
 	public static function create(): void {
-		foreach(Form::$checkboxOptions as $optionName) {
-			register_setting( 'pluginSettings', $optionName, array('Form', 'handleCheckbox'));
-		}
+        foreach(Form::$sections as $section) {
+            add_settings_section( $section['id'], $section['title'], $section['callback'], Form::$page);
+        }
 
-		foreach(Form::$sections as $section) {
-			add_settings_section( $section['id'], $section['title'], $section['callback'], Form::$page);
-		}
-
-		foreach(Form::$fields as $field) {
-			add_settings_field( $field['id'], $field['title'], $field['callback'], Form::$page, $field['section'], $field['args']);
+		foreach(Form::$checkboxOptions as $id => $title) {
+            register_setting( 'pluginSettings', $id, array('Form', 'handleCheckbox'));
+            $args = array(
+                'label_for' => $id,
+                'class' => 'input-field'
+            );
+            add_settings_field( $id, $title, array('Form', 'createCheckbox'), Form::$page, 'admin_section', $args);
 		}
 	}
 
