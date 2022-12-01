@@ -21,6 +21,10 @@ class Init {
 
     public static function pluginActivation(): void {
         flush_rewrite_rules();
+
+        if(!get_option('jasa_demo')) {
+            Init::setDefaultOptions();
+        }
     }
 
     public static function pluginDeactivation(): void {
@@ -35,6 +39,17 @@ class Init {
                 'label' => 'Transactions',
                 'menu_icon' => 'dashicons-money-alt'
             )
+        );
+    }
+
+    private static function setDefaultOptions(): void {
+        $defaultOptions = array(
+            'cptManager' => 'on',
+            'authManager' => 'on'
+        );
+        update_option(
+            option: 'jasa_demo',
+            value: $defaultOptions
         );
     }
 }

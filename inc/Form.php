@@ -80,12 +80,18 @@ class Form {
 		}
 	}
 
+    /**
+     * Validate or parse the input, authenticate the user etc.
+     * @param $input
+     * @return array
+     */
 	public static function handleCheckbox($input): array {
-		// validation, parsing, authentication etc.
         $data = array();
 
-        foreach (Form::$checkboxOptions as $id => $title) {
-            $data[$id] = isset($input[$id]);
+        foreach ($input as $key => $value) {
+            $key = filter_var(value: $key, filter: FILTER_SANITIZE_STRING);
+            $value = filter_var(value: $value, filter: FILTER_SANITIZE_STRING);
+            $data[$key] = $value;
         }
 
 		return $data;
@@ -96,15 +102,15 @@ class Form {
 	}
 
     public static function createCheckbox($args): void {
-        $option = $args["option_name"];
-        $name = $args["label_for"];
+        $option = $args['option_name'];
+        $name = $args['label_for'];
         $value = get_option(option: $option); // array of values from the options table
-        $checked = $value[$name];
+        $checked = $value[$name] ?? '';
         echo '
             <input
 				type="checkbox"
 				name='. $option . '[' . $name . ']' .'
-				'. ($checked ? 'checked' : '') .'
+				'. (strcmp($checked, 'on') === 0 ? 'checked' : '') .'
 			/>
         ';
     }
