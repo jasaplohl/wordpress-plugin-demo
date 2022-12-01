@@ -34,7 +34,10 @@ class Form {
 	public static function init($page): void {
 		Form::$page = $page;
 
-		add_action(hook_name: 'admin_init', callback: array('Form', 'create')); // Create the admin custom fields
+		add_action(
+            hook_name: 'admin_init',
+            callback: array('Form', 'create')
+        ); // Create the admin custom fields
 	}
 
     /**

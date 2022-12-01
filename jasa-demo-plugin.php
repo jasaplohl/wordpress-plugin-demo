@@ -31,15 +31,15 @@
  */
 
 // Make sure we don't expose any info if called directly
-function_exists( 'add_action' ) or die('Hi there!  I\'m just a plugin, not much I can do when called directly.');
+function_exists(function: 'add_action') or die('Hi there!  I\'m just a plugin, not much I can do when called directly.');
 
-define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define(constant_name: 'PLUGIN_PATH', value: plugin_dir_path( __FILE__ ));
+define(constant_name: 'PLUGIN_URL', value: plugin_dir_url( __FILE__ ));
+define(constant_name: 'PLUGIN_BASENAME', value: plugin_basename( __FILE__ ));
 
 require_once(PLUGIN_PATH . '/inc/Init.php');
 
-register_activation_hook(__FILE__, array('Init', 'pluginActivation'));
-register_deactivation_hook(__FILE__, array('Init', 'pluginDeactivation'));
+register_activation_hook(file: __FILE__, callback: array('Init', 'pluginActivation'));
+register_deactivation_hook(file: __FILE__, callback: array('Init', 'pluginDeactivation'));
 
 Init::init();

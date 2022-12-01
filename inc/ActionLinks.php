@@ -5,7 +5,10 @@
 
 class ActionLinks {
     public static function init(): void {
-        add_filter('plugin_action_links_'.PLUGIN_BASENAME, array('ActionLinks', 'addUrls')); // Admin url on the plugin list item
+        add_filter(
+            hook_name: 'plugin_action_links_'.PLUGIN_BASENAME,
+            callback: array('ActionLinks', 'addUrls')
+        ); // Admin url on the plugin list item
     }
 
     public static function addUrls($actions) {

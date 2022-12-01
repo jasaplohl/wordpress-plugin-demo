@@ -13,7 +13,10 @@ class Init {
         ActionLinks::init();
         Enqueue::init();
 
-        add_action('init', array('Init', 'generateTransactionPostType')); // Create the custom post type
+        add_action(
+            hook_name: 'init',
+            callback: array('Init', 'generateTransactionPostType')
+        ); // Create the custom post type
     }
 
     public static function pluginActivation(): void {
@@ -26,8 +29,8 @@ class Init {
 
     public static function generateTransactionPostType(): void {
         register_post_type(
-            'transactions',
-            array(
+            post_type: 'transactions',
+            args: array(
                 'public' => true,
                 'label' => 'Transactions',
                 'menu_icon' => 'dashicons-money-alt'
