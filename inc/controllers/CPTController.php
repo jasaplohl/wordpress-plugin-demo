@@ -8,15 +8,14 @@ class CPTController {
         add_action(
             hook_name: 'init',
             callback: array('CPTController', 'generatePostTypes')
-        ); // Create the custom post type
+        );
 
-        // Create the admin subpage
         add_action(
             hook_name: 'admin_menu',
             callback: array('CPTController', 'addSubPage')
         );
     }
-
+    
     public static function generatePostTypes(): void {
         register_post_type(
             post_type: 'transactions',
@@ -32,6 +31,10 @@ class CPTController {
         );
     }
 
+    /**
+     * Create the admin subpage.
+     * @return void
+     */
     public static function addSubPage(): void {
         add_submenu_page(
             parent_slug: 'jasa_demo',

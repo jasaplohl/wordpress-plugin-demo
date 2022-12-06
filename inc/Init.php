@@ -6,17 +6,33 @@
 require_once(PLUGIN_PATH . '/inc/Admin.php');
 require_once(PLUGIN_PATH . '/inc/ActionLinks.php');
 require_once(PLUGIN_PATH . '/inc/Enqueue.php');
-require_once(PLUGIN_PATH . '/inc/CPTController.php');
+require_once(PLUGIN_PATH . '/inc/controllers/CPTController.php');
+require_once(PLUGIN_PATH . '/inc/controllers/TaxonomyController.php');
+
+$FEATURES = array(
+    'cptManager' => array(
+        'title' => 'Custom Post Type Manager',
+        'controller' => CPTController::class
+    ),
+    'taxonomyManager' => array(
+        'title' => 'Taxonomy Manager',
+        'controller' => TaxonomyController::class
+    )
+);
 
 class Init {
     public static function init(): void {
+        global $FEATURES;
+
         ActionLinks::init();
         Admin::init();
         Enqueue::init();
 
-        // Dynamically activate the chosen functionalities
-        if(Init::isOptionChecked(optionName: 'cptManager')) {
-            CPTController::init();
+        // Dynamically activate the chosen features
+        foreach ($FEATURES as $key => $value) {
+            if(Init::isOptionChecked(optionName: $key)) {
+                $value['controller']::init();
+            }
         }
     }
 
@@ -34,7 +50,7 @@ class Init {
 
     private static function setDefaultOptions(): void {
         $defaultOptions = array(
-            'authManager' => 'on'
+            'cptManager' => 'on'
         );
         update_option(
             option: 'jasa_demo',

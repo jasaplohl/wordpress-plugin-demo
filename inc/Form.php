@@ -6,21 +6,6 @@
 class Form {
 	public static string $page;
 
-    /**
-     * Map (optionId => optionTitle);
-     */
-    public static array $checkboxOptions = array(
-        'cptManager' => 'Custom Post Type Manager',
-        'taxonomyManager' => 'Taxonomy Manager',
-        'mediaWidget' => 'Media Widget',
-        'galleryManager' => 'Gallery Manager',
-        'testimonialManager' => 'Testimonial Manager',
-        'templateManager' => 'Template Manager',
-        'authManager' => 'Authentication Manager',
-        'membershipManager' => 'Membership Manager',
-        'chatManager' => 'Chat Manager'
-    );
-
 	public static array $sections = array(
 		array(
 			'id' => 'admin_section',
@@ -66,15 +51,16 @@ class Form {
             );
         }
 
-		foreach(Form::$checkboxOptions as $id => $title) {
+        global $FEATURES;
+		foreach($FEATURES as $key => $value) {
             $args = array(
                 'option_name' => $optionName,
-                'label_for' => $id,
+                'label_for' => $key,
                 'class' => 'input-field'
             );
             add_settings_field(
-                id: $id,
-                title: $title,
+                id: $key,
+                title: $value['title'],
                 callback: array('Form', 'createCheckbox'),
                 page: Form::$page,
                 section: 'admin_section',
