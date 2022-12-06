@@ -8,6 +8,7 @@ require_once(PLUGIN_PATH . '/inc/ActionLinks.php');
 require_once(PLUGIN_PATH . '/inc/Enqueue.php');
 require_once(PLUGIN_PATH . '/inc/controllers/CPTController.php');
 require_once(PLUGIN_PATH . '/inc/controllers/TaxonomyController.php');
+require_once(PLUGIN_PATH . '/inc/controllers/MediaWidgetController.php');
 
 $FEATURES = array(
     'cptManager' => array(
@@ -17,6 +18,10 @@ $FEATURES = array(
     'taxonomyManager' => array(
         'title' => 'Taxonomy Manager',
         'controller' => TaxonomyController::class
+    ),
+    'mediaWidget' => array(
+        'title' => 'Media Widget',
+        'controller' => MediaWidgetController::class
     )
 );
 
