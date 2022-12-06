@@ -6,17 +6,18 @@
 require_once(PLUGIN_PATH . '/inc/Admin.php');
 require_once(PLUGIN_PATH . '/inc/ActionLinks.php');
 require_once(PLUGIN_PATH . '/inc/Enqueue.php');
+require_once(PLUGIN_PATH . '/inc/CPTController.php');
 
 class Init {
     public static function init(): void {
-        Admin::init();
         ActionLinks::init();
+        Admin::init();
         Enqueue::init();
 
-        add_action(
-            hook_name: 'init',
-            callback: array('Init', 'generateTransactionPostType')
-        ); // Create the custom post type
+        // Dynamically activate the chosen functionalities
+        if(Init::isOptionChecked(optionName: 'cptManager')) {
+            CPTController::init();
+        }
     }
 
     public static function pluginActivation(): void {
@@ -31,25 +32,19 @@ class Init {
         flush_rewrite_rules();
     }
 
-    public static function generateTransactionPostType(): void {
-        register_post_type(
-            post_type: 'transactions',
-            args: array(
-                'public' => true,
-                'label' => 'Transactions',
-                'menu_icon' => 'dashicons-money-alt'
-            )
-        );
-    }
-
     private static function setDefaultOptions(): void {
         $defaultOptions = array(
-            'cptManager' => 'on',
             'authManager' => 'on'
         );
         update_option(
             option: 'jasa_demo',
             value: $defaultOptions
         );
+    }
+
+    private static function isOptionChecked(string $optionName): bool {
+        $settings = get_option(option: 'jasa_demo');
+        $checked = $settings[$optionName] ?? '';
+        return strcmp($checked, 'on') === 0;
     }
 }

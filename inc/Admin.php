@@ -8,10 +8,6 @@ require_once(PLUGIN_PATH . '/inc/Form.php');
 class Admin {
 
     public static array $menuSubPages = array(
-        'cpt_manager' => array(
-            'title' => 'CPT Manager',
-            'callback' => array('Admin', 'cptManager')
-        ),
         'taxonomy_manager' => array(
             'title' => 'Taxonomy Manager',
             'callback' => array('Admin', 'taxonomyManager')
@@ -23,16 +19,19 @@ class Admin {
     );
 
     public static function init(): void {
+        // Create the admin page and its menu item
         add_action(
             hook_name: 'admin_menu',
             callback: array('Admin', 'addAdminPage')
-        ); // Create the admin page and its menu item
+        );
 
+        // Create the admin subpages
         add_action(
             hook_name: 'admin_menu',
             callback: array('Admin', 'addAdminSubPages')
-        ); // Create the admin subpages
+        );
 
+        // Initialize the dashboard form.
 	    Form::init( page: 'jasa_demo');
     }
 
@@ -58,10 +57,6 @@ class Admin {
                 callback: $value['callback']
             );
         }
-    }
-
-    public static function cptManager() {
-        return require_once(PLUGIN_PATH . '/templates/cpt_manager.php');
     }
 
     public static function taxonomyManager() {
