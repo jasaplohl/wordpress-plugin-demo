@@ -7,6 +7,21 @@ require_once(PLUGIN_PATH . '/inc/Form.php');
 
 class Admin {
 
+    public static array $menuSubPages = array(
+        'cpt_manager' => array(
+            'title' => 'CPT Manager',
+            'callback' => array('Admin', 'cptManager')
+        ),
+        'taxonomy_manager' => array(
+            'title' => 'Taxonomy Manager',
+            'callback' => array('Admin', 'taxonomyManager')
+        ),
+        'mediaWidget' => array(
+            'title' => 'Media Widget',
+            'callback' => array('Admin', 'mediaWidget')
+        )
+    );
+
     public static function init(): void {
         add_action(
             hook_name: 'admin_menu',
@@ -33,13 +48,27 @@ class Admin {
     }
 
     public static function addAdminSubPages(): void {
-        add_submenu_page(
-            parent_slug: 'jasa_demo',
-            page_title: 'Dashboard',
-            menu_title: 'Dashboard',
-            capability: 'manage_options',
-            menu_slug: 'menu_subpage',
-            callback: function() { return require_once(PLUGIN_PATH . '/templates/dashboard.php'); }
-        );
+        foreach (Admin::$menuSubPages as $key => $value) {
+            add_submenu_page(
+                parent_slug: 'jasa_demo',
+                page_title: $value['title'],
+                menu_title: $value['title'],
+                capability: 'manage_options',
+                menu_slug: $key,
+                callback: $value['callback']
+            );
+        }
+    }
+
+    public static function cptManager() {
+        return require_once(PLUGIN_PATH . '/templates/cpt_manager.php');
+    }
+
+    public static function taxonomyManager() {
+        return require_once(PLUGIN_PATH . '/templates/taxonomy_manager.php');
+    }
+
+    public static function mediaWidget() {
+        return require_once(PLUGIN_PATH . '/templates/media_widget.php');
     }
 }

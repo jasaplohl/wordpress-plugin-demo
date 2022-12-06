@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package JasaDemoPlugin
+ */
 
 class Form {
 	public static string $page;

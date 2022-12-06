@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package JasaDemoPlugin
+ */
 
 class Enqueue {
     public static function init(): void {

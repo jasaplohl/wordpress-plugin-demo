@@ -1,3 +1,3 @@
 <div class="wrap">
-    <h1>Dashboard</h1>
+    <h1>CPT Manager</h1>
 </div>
